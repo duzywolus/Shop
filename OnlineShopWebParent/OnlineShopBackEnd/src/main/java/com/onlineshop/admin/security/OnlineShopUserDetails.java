@@ -5,9 +5,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import com.onlineshop.common.entity.Role;
 import com.onlineshop.common.entity.User;
@@ -60,6 +62,10 @@ public class OnlineShopUserDetails implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return user.isEnabled();
+	}
+	
+	public String getFullName() {
+		return this.user.getFirstName() + " " + this.user.getLastName();
 	}
 
 }
