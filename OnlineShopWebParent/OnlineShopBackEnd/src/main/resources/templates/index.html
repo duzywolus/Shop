@@ -9,7 +9,12 @@
 		<div th:replace="navigation :: menu"></div>
 
 		<div>
-			<h1>Online Shop Control Panel</h1>
+			<h2>Online Shop Control Panel</h2>
+			Welcome
+			<a th:href="@{/account}"
+			sec:authentication="principal.fullName"></a>
+			&nbsp
+			<span sec:authentication="principal.authorities"></span>
 		</div>
 
 		<div th:replace="fragments :: footer"></div>
