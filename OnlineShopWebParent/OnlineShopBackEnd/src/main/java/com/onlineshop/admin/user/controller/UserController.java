@@ -1,4 +1,4 @@
-package com.onlineshop.admin.user;
+package com.onlineshop.admin.user.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.onlineshop.admin.FileUploadUtil;
+import com.onlineshop.admin.user.UserNotFoundException;
+import com.onlineshop.admin.user.UserService;
 import com.onlineshop.admin.user.export.UserCsvExporter;
 import com.onlineshop.admin.user.export.UserExcelExporter;
 import com.onlineshop.admin.user.export.UserPdfExporter;
@@ -65,7 +67,7 @@ public class UserController {
 		model.addAttribute("reverseSortDir", reverseSortDir);
 		model.addAttribute("keyword", keyword);
 		
-		return "users";
+		return "users/users";
 	}
 
 	@GetMapping("/users/new")
@@ -76,7 +78,7 @@ public class UserController {
 		model.addAttribute("user", user);
 		model.addAttribute("listRoles", listRoles);
 		model.addAttribute("pageTitle", "Create New User");
-		return "user_form";
+		return "users/user_form";
 	}
 
 	@PostMapping("/users/save")
@@ -120,7 +122,7 @@ public class UserController {
 			model.addAttribute("pageTitle", "Edit User (ID: " + id + ")");
 			model.addAttribute("listRoles", listRoles);
 
-			return "user_form";
+			return "users/user_form";
 		} catch (UserNotFoundException ex) {
 			redirectAttributes.addFlashAttribute("message", ex.getMessage());
 			return "redirect:/users";
