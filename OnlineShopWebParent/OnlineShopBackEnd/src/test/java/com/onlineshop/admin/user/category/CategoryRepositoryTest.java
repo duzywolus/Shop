@@ -88,5 +88,12 @@ public class CategoryRepositoryTest {
 		}
 		
 	}
+	
+	@Test
+	public void testListRootCategories() {
+		List<Category> rootCategories = categoryRepository.findRootCategories();
+		
+		rootCategories.forEach(cat -> System.out.println(cat.getName()));
+	}
 
 }
