@@ -2,6 +2,7 @@ package com.onlineshop.admin.category;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.springframework.beans.factory.HierarchicalBeanFactory;
@@ -97,6 +98,14 @@ public class CategoryService {
 			categoriesUsedInForm.add(Category.copyIdAndName(subCategory.getId(), name));
 			
 			listSubCategoriesUsedInForm(categoriesUsedInForm, subCategory, newSubLevel);
+		}
+	}
+	
+	public Category get(Integer id) throws CategoryNotFoundException{
+		try {
+			return categoryRepository.findById(id).get();
+		} catch (NoSuchElementException e) {
+			throw new CategoryNotFoundException("Could not find any category with ID " + id);
 		}
 	}
 	
