@@ -14,7 +14,7 @@
 
 			<a th:href="@{/users/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
 		</div>
-		
+
 		<div th:if="${message != null}" class="alert alert-success text-center">
 			[[${message}]]
 		</div>
@@ -41,7 +41,11 @@
 					<tr>
 						<th>ID</th>
 						<th>Category Image</th>
-						<th>Category Name</th>
+						<th>
+							<a class="text-white" th:href="@{'/categories?sortDir=' + ${reverseSortDir}}">Category
+								Name</a>
+							<span th:class="${reverseSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+						</th>
 						<th>Alias</th>
 						<th>Enabled</th>
 						<th></th>
@@ -51,16 +55,18 @@
 					<tr th:each="category : ${listCategories}">
 						<td>[[${category.id}]]</td>
 						<td>
-							<img th:src="@{${category.imagePath}}" style="width: 100px" class="img-fluid"/>
+							<img th:src="@{${category.imagePath}}" style="width: 100px" class="img-fluid" />
 						</td>
 						<td>[[${category.name}]]</td>
 						<td>[[${category.alias}]]</td>
 						<td>
 							<a th:if="${category.enabled == true}" class="fa-solid fa-check-circle fa-2x icon-green"
-								th:href="@{'/categories/' + ${category.id} + '/enabled/false'}" title="Disable this category"></a>
+								th:href="@{'/categories/' + ${category.id} + '/enabled/false'}"
+								title="Disable this category"></a>
 
 							<a th:if="${category.enabled == false}" class="fa-solid fa-circle fa-2x icon-dark"
-								th:href="@{'/categories/' + ${category.id} + '/enabled/true'}" title="Enable this category"></a>
+								th:href="@{'/categories/' + ${category.id} + '/enabled/true'}"
+								title="Enable this category"></a>
 						</td>
 						<td>
 							<a class="fa-solid fa-pen-to-square fa-2x icon-green"
