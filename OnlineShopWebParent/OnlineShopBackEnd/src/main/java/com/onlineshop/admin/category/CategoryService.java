@@ -8,14 +8,15 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.springframework.beans.factory.HierarchicalBeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import com.onlineshop.common.entity.Category;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class CategoryService {
 	@Autowired
 	private CategoryRepository categoryRepository;
@@ -168,6 +169,10 @@ public class CategoryService {
 		
 		sortedChildren.addAll(children);
 		return sortedChildren;
+	}
+	
+	public void updateCategoryEnabledStatus(Integer id, boolean enabled) {
+		categoryRepository.updateEnabledStatus(id, enabled);
 	}
 	
 }
