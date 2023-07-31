@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.onlineshop.admin.FileUploadUtil;
+import com.onlineshop.admin.user.UserService;
 import com.onlineshop.common.entity.Category;
 
 @Controller
@@ -28,26 +29,37 @@ public class CategoryController {
 	
 	@GetMapping("/categories")
 	public String listFirstPage(@Param("sortDir") String sortDir,Model model) {
-		return listByPage(1, sortDir, model);
+		return listByPage(1, sortDir, null, model);
 	}
 	
 	@GetMapping("/categories/page/{pageNum}")
 	public String listByPage(@PathVariable(name = "pageNum") int pageNum, 
-			@Param("sortDir") String sortDir, Model model) {
+			@Param("sortDir") String sortDir, 
+			@Param("keyword") String keyword,
+			Model model) {
 		if (sortDir == null || sortDir.isEmpty()) {
 			sortDir = "asc";
 		}
 		
 		CategoryPageInfo categoryPageInfo = new CategoryPageInfo();
-		List<Category> listCategories = categoryService.listByPage(categoryPageInfo, pageNum, sortDir);
+		List<Category> listCategories = categoryService.listByPage(categoryPageInfo, pageNum, sortDir, keyword);
+		
+		long startCount = (pageNum -1) * CategoryService.ROOT_CATEGORIES_PER_PAGE + 1;
+		long endCount = startCount + CategoryService.ROOT_CATEGORIES_PER_PAGE - 1;
+		if(endCount > categoryPageInfo.getTotalElements()) {
+			endCount = categoryPageInfo.getTotalElements();
+		}
 		
 		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
 		
 		model.addAttribute("totalPages", categoryPageInfo.getTotalPages());
-		model.addAttribute("totalItems", categoryPageInfo.getTotalPages());
+		model.addAttribute("totalItems", categoryPageInfo.getTotalElements());
 		model.addAttribute("currentPage", pageNum);
+		model.addAttribute("startCount", startCount);
+		model.addAttribute("endCount", endCount);
 		model.addAttribute("sortField", "name");
 		model.addAttribute("sortDir", sortDir);
+		model.addAttribute("keyword", keyword);
 		
 		model.addAttribute("listCategories", listCategories);
 		model.addAttribute("reverseSortDir", reverseSortDir);
