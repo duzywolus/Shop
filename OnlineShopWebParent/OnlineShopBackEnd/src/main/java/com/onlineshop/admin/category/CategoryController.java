@@ -21,6 +21,8 @@ import com.onlineshop.admin.FileUploadUtil;
 import com.onlineshop.admin.user.UserService;
 import com.onlineshop.common.entity.Category;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 @Controller
 public class CategoryController {
 	
@@ -141,4 +143,12 @@ public class CategoryController {
 		
 		return "redirect:/categories";
 	}
+	
+	@GetMapping("/categories/export/csv")
+	public void exportToCSV(HttpServletResponse response) throws IOException {
+		List<Category> listCategories = categoryService.listCategoriesUsedInForm();
+		CategoryCsvExporter exporter = new CategoryCsvExporter();
+		exporter.export(listCategories, response);
+	}
+	
 }
