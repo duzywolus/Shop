@@ -62,6 +62,20 @@ public class Brand {
 	public void setCategories(Set<Category> categories) {
 		this.categories = categories;
 	}
+
+	public Brand() {
+		
+	}
+	
+	public Brand(String name) {
+		this.name = name;
+		this.logo = "brand-logo.png";
+	}
+
+	@Override
+	public String toString() {
+		return "Brand [id=" + id + ", name=" + name + ", categories=" + categories + "]";
+	}
 	
 	
 
