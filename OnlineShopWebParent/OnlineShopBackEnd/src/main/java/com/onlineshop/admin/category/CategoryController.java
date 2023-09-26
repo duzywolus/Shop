@@ -30,7 +30,7 @@ public class CategoryController {
 	private CategoryService categoryService;
 	
 	@GetMapping("/categories")
-	public String listFirstPage(@Param("sortDir") String sortDir,Model model) {
+	public String listFirstPage(String sortDir,Model model) {
 		return listByPage(1, sortDir, null, model);
 	}
 	
