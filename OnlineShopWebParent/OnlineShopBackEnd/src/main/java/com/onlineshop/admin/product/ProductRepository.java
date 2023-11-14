@@ -6,5 +6,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import com.onlineshop.common.entity.Product;
 
 public interface ProductRepository extends PagingAndSortingRepository<Product, Integer>, CrudRepository<Product, Integer> {
-
+	public Product findByName(String name);
+	
 }

@@ -33,5 +33,21 @@ public class ProductService {
 		
 		return productRepository.save(product);
 	}
+	
+	public String checkUnique(Integer id, String name) {
+		boolean isCreatingNew = (id == null || id == 0);
+		Product productByName = productRepository.findByName(name);
+		
+		if(isCreatingNew) {
+			if (productByName != null) 
+				return "Duplicated";
+		} else {
+			if(productByName != null && productByName.getId() != id) {
+				return "Duplicated";
+			}
+		}
+		
+		return "OK";
+	}
 
 }
