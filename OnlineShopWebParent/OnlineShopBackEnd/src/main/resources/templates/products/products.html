@@ -51,7 +51,7 @@
 							&nbsp;
 							<div th:replace="fragments :: edit('product', '/product/edit/' + ${product.id})"></div>
 							&nbsp;
-							<div th:replace="fragments :: delete('product', ${product.id}, '/product/delete/' + ${product.id}, true)"></div>
+							<div th:replace="fragments :: delete('product', ${product.id}, '/products/delete/' + ${product.id}, true)"></div>
 						</td>
 					</tr>
 				</tbody>
@@ -73,7 +73,7 @@
 		$(document).ready(function(){
 			$(".link-delete").on("click", function(e){
 				e.preventDefault();
-				showDeleteConfirmModal($(this), 'brand');
+				showDeleteConfirmModal($(this), 'product');
 			});
 		});
 		
