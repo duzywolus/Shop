@@ -1,7 +1,10 @@
 package com.onlineshop.common.entity;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -52,6 +56,10 @@ public class Product {
 	private float height;
 	private float weight;
 	
+	@Column(name = "main_image", nullable = false)
+	private String mainImage;
+	
+	
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private Category category;
@@ -59,6 +67,9 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name = "brand_id")
 	private Brand brand;
+	
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	private Set<ProductImage> images = new HashSet<>();
 
 	public Integer getId() {
 		return id;
@@ -208,8 +219,26 @@ public class Product {
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + "]";
 	}
+
+	public String getMainImage() {
+		return mainImage;
+	}
+
+	public void setMainImage(String mainImage) {
+		this.mainImage = mainImage;
+	}
+
+	public Set<ProductImage> getImages() {
+		return images;
+	}
+
+	public void setImages(Set<ProductImage> images) {
+		this.images = images;
+	}
 	
-	
+	public void addExtraImage(String imageName) {
+		this.images.add(new ProductImage(imageName, this));
+	}
 	
 
 }
