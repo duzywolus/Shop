@@ -49,7 +49,7 @@
 							th:href="@{'/products/detail/' + ${product.id}}"
 							title="View details of product"></a>
 							&nbsp;
-							<div th:replace="fragments :: edit('product', '/product/edit/' + ${product.id})"></div>
+							<div th:replace="fragments :: edit('product', '/products/edit/' + ${product.id})"></div>
 							&nbsp;
 							<div th:replace="fragments :: delete('product', ${product.id}, '/products/delete/' + ${product.id}, true)"></div>
 						</td>
